@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KaamWala - Premium Local Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+<style>
+/* ------------------- GLOBAL RESET ------------------- */
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Roboto','Segoe UI',sans-serif;}
+:root{
+  --bg-dark:#1a1a2e;
+  --accent1:#e94560;
+  --accent2:#0f3460;
+  --card-bg:rgba(255,255,255,0.05);
+  --text-light:#f5f5f5;
+  --shadow:rgba(0,0,0,0.25);
+  --transition:all 0.4s ease;
+}
+
+/* ------------------- BODY ------------------- */
+body{
+  background:var(--bg-dark);
+  color:var(--text-light);
+  scroll-behavior:smooth;
+  overflow-x:hidden;
+}
+
+/* ------------------- NAVBAR ------------------- */
+nav{
+  position:fixed;
+  top:0;
+  width:100%;
+  padding:15px 30px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(26,26,46,0.85);
+  backdrop-filter:blur(12px);
+  box-shadow:0 4px 20px var(--shadow);
+  z-index:1000;
+  transition:var(--transition);
+}
+nav.scrolled{ background:rgba(15,52,96,0.95); }
+nav .logo{
+  font-family:'Poppins',sans-serif;
+  font-size:28px;
+  font-weight:700;
+  color:var(--accent1);
+  letter-spacing:1px;
+  cursor:pointer;
+  text-shadow:0 2px 8px rgba(0,0,0,0.4);
+  transition:transform 0.3s;
+}
+nav .logo:hover{ transform:scale(1.05);}
+nav .search-container{
+  display:flex;
+  gap:12px;
+  flex:1;
+  margin:0 20px;
+}
+nav input{
+  padding:10px 15px;
+  border-radius:25px;
+  border:none;
+  outline:none;
+  width:100%;
+  font-size:16px;
+  background:rgba(255,255,255,0.12);
+  color:var(--text-light);
+  box-shadow:0 3px 15px rgba(0,0,0,0.1);
+  transition:var(--transition);
+}
+nav input::placeholder{ color:rgba(245,245,245,0.7);}
+nav input:focus{ box-shadow:0 3px 20px var(--shadow); background:rgba(255,255,255,0.18);}
+nav button{
+  padding:10px 20px;
+  border-radius:25px;
+  border:none;
+  font-weight:600;
+  background:var(--accent1);
+  color:white;
+  cursor:pointer;
+  transition:var(--transition);
+}
+nav button:hover{
+  background:var(--accent2);
+  transform:scale(1.05);
+  box-shadow:0 6px 20px var(--shadow);
+}
+nav .profile-btn{
+  border-radius:50%;
+  width:45px;
+  height:45px;
+  overflow:hidden;
+  display:none;
+  border:2px solid var(--accent1);
+  transition:transform 0.3s, box-shadow 0.3s;
+}
+nav .profile-btn img{
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  object-fit:cover;
+}
+nav .profile-btn:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 12px var(--accent1);
+}
+
+/* ------------------- HERO ------------------- */
+.hero{
+  margin-top:80px;
+  text-align:center;
+  padding:140px 20px;
+  position:relative;
+  overflow:hidden;
+  color:var(--text-light);
+  background:linear-gradient(135deg,#0f3460,#1a1a2e);
+}
+.hero::before{
+  content:''; position:absolute; width:200%; height:200%;
+  background:radial-gradient(circle, rgba(233,69,96,0.1) 1%, transparent 1%) repeat;
+  background-size:80px 80px;
+  top:-50%; left:-50%;
+  animation:moveBG 25s linear infinite;
+  pointer-events:none;
+}
+@keyframes moveBG{
+  0%{transform:translate(0,0);}
+  50%{transform:translate(100px,100px);}
+  100%{transform:translate(0,0);}
+}
+.hero h1{
+  font-family:'Poppins',sans-serif;
+  font-size:56px;
+  margin-bottom:20px;
+  animation:fadeDown 1s ease forwards;
+  opacity:0;
+  letter-spacing:2px;
+  text-shadow:0 2px 12px rgba(233,69,96,0.7);
+}
+.hero p{
+  font-size:26px;
+  animation:fadeUp 1s 0.5s ease forwards;
+  opacity:0;
+  text-shadow:0 1px 8px rgba(0,0,0,0.4);
+}
+@keyframes fadeDown{0%{opacity:0;transform:translateY(-50px);}100%{opacity:1;transform:translateY(0);}}
+@keyframes fadeUp{0%{opacity:0;transform:translateY(50px);}100%{opacity:1;transform:translateY(0);}}
+
+/* ------------------- SERVICES ------------------- */
+.services{
+  padding:100px 20px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:30px;
+}
+.service-card{
+  background:var(--card-bg);
+  padding:50px 20px;
+  text-align:center;
+  border-radius:20px;
+  box-shadow:0 10px 30px var(--shadow);
+  transition:var(--transition);
+  cursor:pointer;
+  position:relative;
+  overflow:hidden;
+  backdrop-filter:blur(10px);
+}
+.service-card i{
+  font-size:44px;
+  margin-bottom:15px;
+  color:var(--accent1);
+  transition:var(--transition);
+}
+.service-card span{
+  font-size:18px;
+  font-weight:600;
+  color:var(--text-light);
+  transition:var(--transition);
+}
+.service-card::before{
+  content:''; position:absolute; width:150%; height:150%;
+  background:linear-gradient(45deg, rgba(233,69,96,0.1), rgba(78,205,196,0.1));
+  top:0; left:-150%; transform:rotate(25deg);
+  transition:var(--transition);
+}
+.service-card:hover::before{ left:0;}
+.service-card:hover{
+  transform:translateY(-12px) scale(1.03);
+  box-shadow:0 18px 40px var(--shadow);
+}
+.service-card:hover i{
+  color:var(--accent2);
+  text-shadow:0 0 10px var(--accent2);
+}
+@keyframes floatUpDown{
+  0%{transform:translateY(0);}
+  50%{transform:translateY(-6px);}
+  100%{transform:translateY(0);}
+}
+.service-card:hover{ animation:floatUpDown 1.5s infinite; }
+
+/* ------------------- FOOTER ------------------- */
+footer{
+  background:#0f3460;
+  color:white;
+  text-align:center;
+  padding:50px 20px;
+  font-size:14px;
+}
+footer a{
+  color:white;
+  text-decoration:underline;
+  transition:var(--transition);
+}
+footer a:hover{ color:var(--accent1); text-decoration:none; }
+
+/* ------------------- MODALS ------------------- */
+.side-panel{
+  position:fixed;
+  right:-350px;
+  top:0;
+  width:350px;
+  height:100%;
+  background:rgba(26,26,46,0.97);
+  box-shadow:-4px 0 20px var(--shadow);
+  transition:right 0.4s ease;
+  padding:25px;
+  z-index:2000;
+  overflow-y:auto;
+  border-radius:0 0 0 20px;
+}
+.side-panel.open{ right:0; }
+.side-panel h2{ margin-bottom:25px; font-size:22px; color:var(--accent1);}
+.side-panel button{
+  display:block;
+  width:100%;
+  padding:14px;
+  margin:10px 0;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  background:var(--accent1);
+  color:white;
+  font-size:16px;
+  transition:var(--transition);
+}
+.side-panel button:hover{ background:var(--accent2); }
+
+#dashboardContent,#providerModal{
+  display:none;
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:rgba(26,26,46,0.9);
+  justify-content:center; align-items:center;
+  z-index:3000;
+}
+#dashboardContent .modal-content,#providerModal .modal-content{
+  background:rgba(30,30,46,0.97);
+  padding:25px;
+  border-radius:20px;
+  width:90%;
+  max-width:650px;
+  max-height:85%;
+  overflow-y:auto;
+  animation:fadeScale 0.5s ease;
+  color:var(--text-light);
+  box-shadow:0 8px 30px var(--shadow);
+}
+@keyframes fadeScale{
+  0%{opacity:0; transform:scale(0.9);}
+  100%{opacity:1; transform:scale(1);}
+}
+#dashboardContent button.close-btn,#providerModal button.close-btn{
+  margin-top:15px;
+  padding:10px 15px;
+  background:var(--accent1);
+  color:white;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  transition:var(--transition);
+}
+#dashboardContent button.close-btn:hover,#providerModal button.close-btn:hover{
+  background:var(--accent2);
+}
+
+/* ------------------- UPDATED DASHBOARD UI ------------------- */
+#dashboardPanel {
+  width:300px;
+  padding:0;
+  border-radius:0;
+  right:-300px;
+  top:0;
+  background:#fff;
+  color:#111;
+  transition:right 0.4s ease;
+  box-shadow:-4px 0 20px rgba(0,0,0,0.15);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  z-index:2000;
+}
+#dashboardPanel.open{ right:0; }
+#dashboardPanel .profile-header {
+  display:flex;
+  align-items:center;
+  padding:20px;
+  background:#f5f5f5;
+  border-bottom:1px solid #ddd;
+}
+#dashboardPanel .profile-header img {
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  margin-right:15px;
+  object-fit:cover;
+}
+#dashboardPanel .profile-header .name {
+  font-weight:600;
+  font-size:18px;
+}
+#dashboardPanel .profile-header .view-profile {
+  font-size:14px;
+  color:#555;
+}
+#dashboardPanel .options {
+  display:flex;
+  flex-direction:column;
+}
+#dashboardPanel .options button {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:15px 20px;
+  border:none;
+  background:none;
+  color:#111;
+  font-size:16px;
+  cursor:pointer;
+  text-align:left;
+  transition:background 0.3s;
+}
+#dashboardPanel .options button:hover{
+  background:#f0f0f0;
+}
+#dashboardPanel .options i{
+  font-size:18px;
+  width:20px;
+}
+
+/* ------------------- RESPONSIVE ------------------- */
+@media(max-width:768px){
+  nav .search-container{flex-direction:column;}
+  nav input{width:100%; margin-bottom:10px;}
+  .hero h1{font-size:36px;}
+  .hero p{font-size:18px;}
+  .services{gap:20px;}
+  .service-card{padding:35px 15px;}
+  .service-card i{font-size:32px;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="logo" onclick="goHome()">KaamWala</div>
+  <div class="search-container">
+    <input type="text" placeholder="Search services..." id="searchService">
+    <input type="text" placeholder="Enter location" id="searchLocation">
+    <button onclick="searchProviders()">Search</button>
+  </div>
+  <button class="login-btn" id="loginBtn" onclick="loginPanel.classList.toggle('open')">Login</button>
+  <button class="profile-btn" id="profileBtn"><img src="https://via.placeholder.com/45" alt="Profile"></button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>KaamWala Premium Services</h1>
+  <p>Find Local Services With Ease & Style</p>
+</section>
+
+<!-- SERVICES -->
+<section class="services">
+  <div class="service-card"><i class="fas fa-bolt"></i><span>Electrician</span></div>
+  <div class="service-card"><i class="fas fa-wrench"></i><span>Plumber</span></div>
+  <div class="service-card"><i class="fas fa-snowflake"></i><span>AC Technician</span></div>
+  <div class="service-card"><i class="fas fa-video"></i><span>CCTV Installer</span></div>
+  <div class="service-card"><i class="fas fa-paint-roller"></i><span>Painter</span></div>
+  <div class="service-card"><i class="fas fa-hammer"></i><span>Carpenter</span></div>
+  <div class="service-card"><i class="fas fa-dumbbell"></i><span>Gym</span></div>
+  <div class="service-card"><i class="fas fa-building"></i><span>Contractor</span></div>
+  <div class="service-card"><i class="fas fa-camera"></i><span>Photographers</span></div>
+  <div class="service-card"><i class="fas fa-couch"></i><span>Interior Designer</span></div>
+  <div class="service-card"><i class="fas fa-calculator"></i><span>Chartered Accountant</span></div>
+</section>
+
+<!-- LOGIN PANEL -->
+<div class="side-panel" id="loginPanel">
+  <h2>Login</h2>
+  <button onclick="location.href='user/user login.html'">User Login</button>
+  <button onclick="location.href='providor/providor login.html'">Provider Login</button>
+</div>
+
+<!-- DASHBOARD PANEL -->
+<div class="side-panel" id="dashboardPanel"></div>
+
+<!-- MODALS -->
+<div id="providerModal">
+  <div class="modal-content">
+    <h3>Available Providers</h3>
+    <ul id="providerList"></ul>
+    <button class="close-btn" onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<div id="dashboardContent">
+  <div class="modal-content">
+    <h3 id="dashboardTitle"></h3>
+    <div id="dashboardBody"></div>
+    <button class="close-btn" onclick="closeDashboardContent()">Close</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>&copy; 2025 KaamWala. All rights reserved.</p>
+  <p><a href="#">About Us</a> | <a href="#">Contact</a></p>
+</footer>
+
+<script>
+// ------------------- NAVBAR SCROLL -------------------
+const navbar=document.getElementById('navbar');
+window.addEventListener('scroll',()=>{ navbar.classList.toggle('scrolled', window.scrollY>20); });
+
+// ------------------- PANELS -------------------
+const loginPanel=document.getElementById('loginPanel');
+const dashboardPanel=document.getElementById('dashboardPanel');
+const loginBtn=document.getElementById('loginBtn');
+const profileBtn=document.getElementById('profileBtn');
+
+// ------------------- DASHBOARD DATA -------------------
+const savedUser = JSON.parse(localStorage.getItem("user"));
+const savedProvider = JSON.parse(localStorage.getItem("provider"));
+
+// ------------------- EMBEDDED UPDATED DASHBOARD JS -------------------
+if(savedUser || savedProvider){
+  loginBtn.style.display = "none";
+  profileBtn.style.display = "block";
+
+  const profileImg = savedUser ? savedUser.photo || 'C:/Users/Hp/Pictures/219983.png' : (savedProvider ? savedProvider.photo || 'https://via.placeholder.com/50' : 'https://via.placeholder.com/50');
+  const profileName = savedUser ? savedUser.name : savedProvider.name;
+
+  dashboardPanel.innerHTML='';
+  const profileHeader = document.createElement('div');
+  profileHeader.className='profile-header';
+  profileHeader.innerHTML=`
+    <img src='${profileImg}' alt='Profile'>
+    <div>
+      <div class='name'>${profileName}</div>
+      <div class='view-profile'>Click to view profile</div>
+    </div>`;
+  dashboardPanel.appendChild(profileHeader);
+
+  const optionsDiv = document.createElement('div');
+  optionsDiv.className='options';
+
+  const optionList = savedUser ? [
+    {icon:'fas fa-user', text:'Profile Details', action:`showSection('profile')`},
+    {icon:'fas fa-history', text:'Service History', action:`showSection('serviceHistory')`},
+    {icon:'fas fa-heart', text:'Saved Providers', action:`showSection('savedProviders')`},
+    {icon:'fas fa-headset', text:'Contact Us', action:`showSection('contactUs')`},
+    {icon:'fas fa-share-alt', text:'Share App', action:`shareApp()`},
+    {icon:'fas fa-sign-out-alt', text:'Logout', action:`logout()`}
+  ] : [
+    {icon:'fas fa-user', text:'Profile Details', action:`showSection('profile')`},
+    {icon:'fas fa-history', text:'Service History', action:`showSection('serviceHistory')`},
+    {icon:'fas fa-bell', text:'Booking Notifications', action:`showSection('bookingNotifications')`},
+    {icon:'fas fa-edit', text:'Manage Profile Card', action:`location.href='provider-manage.html'`},
+    {icon:'fas fa-sign-out-alt', text:'Logout', action:`logout()`}
+  ];
+
+  optionList.forEach(opt=>{
+    const btn=document.createElement('button');
+    btn.innerHTML=`<i class='${opt.icon}'></i> ${opt.text}`;
+    btn.setAttribute('onclick',opt.action);
+    optionsDiv.appendChild(btn);
+  });
+
+  dashboardPanel.appendChild(optionsDiv);
+}
+
+// ------------------- PROFILE & DASHBOARD PANEL -------------------
+profileBtn.addEventListener("click", () => { dashboardPanel.classList.toggle("open"); });
+
+function logout() {
+  localStorage.removeItem("user");
+  localStorage.removeItem("provider");
+  localStorage.removeItem("token");
+  location.reload();
+}
+
+function shareApp(){ 
+  const shareText='Check out KaamWala Premium Services!';
+  if(navigator.share){ navigator.share({ title:'KaamWala', text:shareText, url:window.location.href }); } 
+  else{ alert('Share feature not supported'); } 
+}
+
+function showSection(section){
+  const content=document.getElementById('dashboardBody');
+  const title=document.getElementById('dashboardTitle');
+  content.innerHTML='Loading...'; 
+  document.getElementById('dashboardContent').style.display='flex';
+}
+
+// ------------------- PANEL AUTO CLOSE -------------------
+document.addEventListener('click', function(event){
+  if(!loginPanel.contains(event.target) && !loginBtn.contains(event.target)){
+    loginPanel.classList.remove('open');
+  }
+  if(!dashboardPanel.contains(event.target) && !profileBtn.contains(event.target)){
+    dashboardPanel.classList.remove('open');
+  }
+});
+
+// ------------------- MODAL -------------------
+function closeDashboardContent(){ document.getElementById('dashboardContent').style.display='none'; }
+function closeModal(){ document.getElementById('providerModal').style.display='none'; }
+
+// ------------------- SEARCH -------------------
+function searchProviders(){ 
+  const service=document.getElementById('searchService').value;
+  const location=document.getElementById('searchLocation').value;
+  if(!service || !location){ alert('Enter service and location'); return; }
+  alert(`Search for ${service} in ${location}`);
+}
+
+function goHome(){ window.scrollTo({top:0,behavior:'smooth'}); }
+</script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Auth</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* Styling same as before */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #232f3e, #37475a, #ff9900);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  margin:0;
+  overflow:hidden;
+}
+body::before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, transparent 70%);
+  animation: rotateBG 12s linear infinite;
+}
+@keyframes rotateBG { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.container {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  padding: 40px;
+  border-radius: 20px;
+  width: 380px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  position: relative;
+  z-index: 1;
+}
+.container h2 { margin-bottom: 20px; color: #fff; font-size: 1.8rem; font-weight: 600; text-shadow: 0 0 8px rgba(0,0,0,0.4); }
+input {
+  width: 100%; padding: 12px; margin: 12px 0; border: none; border-radius: 10px;
+  outline: none; font-size: 15px; box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+}
+input:focus { box-shadow: 0 0 10px #ff9900; border: 1px solid #ff9900; }
+button {
+  width: 100%; padding: 12px; margin-top: 15px; border: 2px solid #ff9900;
+  border-radius: 10px; font-size: 16px; font-weight: 600; color: #fff;
+  background: transparent; cursor: pointer; transition: all 0.3s ease;
+}
+button:hover { background: #ff9900; color: #232f3e; transform: scale(1.05); }
+.toggle-btn { background: none; color: #fff; border: none; margin-top: 20px; cursor: pointer; font-size: 14px; text-decoration: underline; }
+.toggle-btn:hover { color: #ff9900; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h2 id="form-title">Login</h2>
+  <div id="nameField" style="display:none;">
+    <input type="text" id="name" placeholder="Full Name">
+  </div>
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="Password">
+  <button id="submitBtn" onclick="handleSubmit()">Login</button>
+  <button class="toggle-btn" onclick="toggleForm()">Don’t have an account? Signup</button>
+</div>
+
+<script>
+let isSignup = false;
+
+function toggleForm(){
+  isSignup = !isSignup;
+  const title = document.getElementById("form-title");
+  const nameField = document.getElementById("nameField");
+  const submitBtn = document.getElementById("submitBtn");
+  const toggleBtn = document.querySelector(".toggle-btn");
+
+  if(isSignup){
+    title.innerText = "Signup";
+    nameField.style.display = "block";
+    submitBtn.innerText = "Signup";
+    toggleBtn.innerText = "Already have an account? Login";
+  } else {
+    title.innerText = "Login";
+    nameField.style.display = "none";
+    submitBtn.innerText = "Login";
+    toggleBtn.innerText = "Don’t have an account? Signup";
+  }
+}
+
+async function handleSubmit(){
+  const name = document.getElementById("name")?.value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  if(!email || !password || (isSignup && !name)){
+    alert("Please fill all required fields!");
+    return;
+  }
+
+  let url = isSignup ? "http://localhost:5000/api/users/signup" : "http://localhost:5000/api/users/login";
+  let body = isSignup ? {name, email, password} : {email, password};
+
+  try {
+    const res = await fetch(url, {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body: JSON.stringify(body)
+    });
+
+    const data = await res.json();
+    alert(data.message);
+
+    if(data.success){
+      if(!isSignup && data.user){
+        localStorage.setItem("role", "user");
+        localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("token", data.token);
+        window.location.href="D:/LOcal services/Frontend/index.html"; // redirect to home
+      }
+    }
+  } catch(err){
+    alert("Server not responding. Please try again later.");
+  }
+}
+</script>
+</body>
+</html>
